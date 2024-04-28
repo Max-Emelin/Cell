@@ -91,4 +91,23 @@ public class UserController : ControllerBase
 
         return BadRequest(response);
     }
+
+    /// <summary>
+    /// Авторизация пользователя.
+    /// </summary>
+    /// <param name="dto"> Введенные данные. </param>
+    /// <returns> Идентификатор пользователя. </returns>
+    [Route("loginUser")]
+    [HttpPost]
+    public async Task<ActionResult<BaseResult<Guid>>> LoginUser(LoginUserDto dto)
+    {
+        var response = await _userService.LoginUser(dto);
+
+        if (response.IsSuccess)
+        {
+            return Ok(response);
+        }
+
+        return BadRequest(response);
+    }
 }

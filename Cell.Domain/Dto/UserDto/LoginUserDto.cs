@@ -1,5 +1,5 @@
 ﻿namespace Cell.Domain.Dto.UserDto;
-public record LoginActorDto(
+public record LoginUserDto(
     string Login,
     string Password
 );

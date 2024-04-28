@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cell.Application.Resources;
 using Cell.Domain.Dto.CommentDto;
+using Cell.Domain.Dto.UserDto;
 using Cell.Domain.Entities;
 using Cell.Domain.Enum;
 using Cell.Domain.Interfaces;
@@ -20,7 +21,7 @@ public class CommentService : ICommentService
         _repository = repository;
         _mapper = mapper;
     }
-    public async Task<BaseResult<CommentDto>> CreateCommentAsync(CommentDto dto)
+    public async Task<BaseResult<CommentDto>> CreateCommentAsync(CreateCommentDto dto)
     {
         try
         {
@@ -37,7 +38,11 @@ public class CommentService : ICommentService
 
             return new BaseResult<CommentDto>()
             {
-                Data = _mapper.Map<CommentDto>(dto)
+                Data = _mapper.Map<CommentDto>(
+                    _repository.GetAll()
+                        .OrderBy(x => x.Created)
+                        .Last()
+                    )
             };
 
         }
@@ -119,8 +124,8 @@ public class CommentService : ICommentService
         try
         {
             var comments = await _repository.GetAll()
-                .Select(x => _mapper.Map<CommentDto>(x))
                 .Where(x => x.UserToId == userId)
+                .Select(x => _mapper.Map<CommentDto>(x))
                 .ToArrayAsync();
 
             if (!comments.Any())

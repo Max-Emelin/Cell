@@ -24,7 +24,7 @@ public class CommentController : ControllerBase
     /// <param name="userId"> Идентификатор пользователя. </param>
     /// <returns> Комментарии к пользователю. </returns>
     [Route("getUserComments")]
-    [HttpPut]
+    [HttpGet]
     public async Task<ActionResult<CollectionResult<CommentDto>>> GetUserComments(Guid userId)
     {
         var response = await _commentService.GetUserCommentsAsync(userId);
@@ -44,7 +44,7 @@ public class CommentController : ControllerBase
     /// <returns> Комментарий. </returns>
     [Route("createComment")]
     [HttpPost]
-    public async Task<ActionResult<CollectionResult<CommentDto>>> CreateComment(CommentDto dto)
+    public async Task<ActionResult<CollectionResult<CommentDto>>> CreateComment(CreateCommentDto dto)
     {
         var response = await _commentService.CreateCommentAsync(dto);
 
