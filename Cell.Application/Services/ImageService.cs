@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cell.Application.Resources;
+using Cell.Domain.Dto.AnnouncementDto;
 using Cell.Domain.Dto.ImageDto;
 using Cell.Domain.Entities;
 using Cell.Domain.Enum;
@@ -59,6 +60,38 @@ public class ImageService : IImageService
                 ErrorMassage = ErrorMessage.InternalServerError,
                 ErrorCode = (int)ErrorCode.InternalServerError
             };
+        }
+    }
+
+    public async Task<List<string>> GetEntityImagePaths(Guid entityId)
+    {
+        try
+        {
+            var imagesPaths = await _repository.GetAll()
+                .Where(x => x.AnnouncementId == entityId)
+                .Select(x => x.Path)
+                .ToListAsync();
+            
+            return await _repository.GetAll()
+                .Where(x => x.AnnouncementId == entityId)
+                .Select(x => x.Path)
+                .ToListAsync();
+        }
+        catch (Exception e)
+        {
+            return new List<string>();
+        }
+    }
+
+    public async Task<string> GetEntityPreviewImagePath(Guid entityId)
+    {
+        try
+        { 
+            return _repository.GetAll().FirstOrDefaultAsync(x => x.AnnouncementId == entityId).Result.Path;
+        }
+        catch (Exception e)
+        {
+            return String.Empty;
         }
     }
 

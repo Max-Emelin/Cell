@@ -23,7 +23,7 @@ public class AnnouncementController : ControllerBase
     /// <returns> Объявление. </returns>
     [Route("getAnnouncement")]
     [HttpGet]
-    public async Task<ActionResult<BaseResult<AnnouncementDto>>> GetAnnouncementById(Guid id)
+    public async Task<ActionResult<BaseResult<AnnouncementAnswerDto>>> GetAnnouncementById(Guid id)
     {
         var response = await _announcementService.GetAnnouncementByIdAsync(id);
 
@@ -99,7 +99,7 @@ public class AnnouncementController : ControllerBase
     /// <returns> Объявления пользователя. </returns>
     [Route("getUserAnnouncements")]
     [HttpGet]
-    public async Task<ActionResult<BaseResult<AnnouncementDto>>> GetUserAnnouncements(Guid userId)
+    public async Task<ActionResult<BaseResult<AnnouncementAnswerDto>>> GetUserAnnouncements(Guid userId)
     {
         var response = await _announcementService.GetUserAnnouncementsAsync(userId);
 
@@ -118,7 +118,7 @@ public class AnnouncementController : ControllerBase
     /// <returns> Все объявления. </returns>
     [Route("getAllAnnouncements")]
     [HttpGet]
-    public async Task<ActionResult<BaseResult<AnnouncementDto>>> GetAllAnnouncements()
+    public async Task<ActionResult<BaseResult<AnnouncementAnswerDto>>> GetAllAnnouncements()
     {
         var response = await _announcementService.GetAllAnnouncementsAsync();
 

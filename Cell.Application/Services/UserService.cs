@@ -125,8 +125,8 @@ public class UserService : IUserService
                 };
             }
 
-            await _userRepository.RemoveAsync(user);
             await DeleteUserAnnouncementsAndComments(id);
+            await _userRepository.RemoveAsync(user);
 
             return new BaseResult<UserDto>()
             {

@@ -8,4 +8,6 @@ public interface IImageService
     Task<CollectionResult<ImageDto>> UploadImagesAsync(IFormFileCollection files, Guid entityId, string fileFolder);
     Task<BaseResult<int>> DeleteImagesByLinkedEntityId(Guid entityId);
     Task<BaseResult<ImageDto>> DeleteImageById(Guid id);
+    Task<List<string>> GetEntityImagePaths(Guid entityId);
+    Task<string> GetEntityPreviewImagePath(Guid entityId);
 }

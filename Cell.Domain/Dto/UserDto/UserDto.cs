@@ -10,7 +10,5 @@ public record UserDto
     string? Email,
     string PhoneNumber,
     string? Address,
-    DateTime Created,
-    ICollection<Announcement> Announcements,
-    ICollection<Comment> Comments
+    DateTime Created
 );

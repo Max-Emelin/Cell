@@ -23,7 +23,7 @@ public class AnnouncementService : IAnnouncementService
         _mapper = mapper;
     }
 
-    public async Task<BaseResult<AnnouncementDto>> GetAnnouncementByIdAsync(Guid id)
+    public async Task<BaseResult<AnnouncementAnswerDto>> GetAnnouncementByIdAsync(Guid id)
     {
         try
         {
@@ -32,21 +32,25 @@ public class AnnouncementService : IAnnouncementService
 
             if (announcement == null)
             {
-                return new BaseResult<AnnouncementDto>()
+                return new BaseResult<AnnouncementAnswerDto>()
                 {
                     ErrorMassage = ErrorMessage.DataNotFount,
                     ErrorCode = (int)ErrorCode.DataNotFount
                 };
             }
 
-            return new BaseResult<AnnouncementDto>()
+            var announcementAnswer = _mapper.Map<AnnouncementAnswerDto>(announcement);
+
+            announcementAnswer.ImagePaths = await _imageService.GetEntityImagePaths(id);
+
+            return new BaseResult<AnnouncementAnswerDto>()
             {
-                Data = _mapper.Map<AnnouncementDto>(announcement)
+                Data = announcementAnswer
             };
         }
         catch (Exception e)
         {
-            return new BaseResult<AnnouncementDto>()
+            return new BaseResult<AnnouncementAnswerDto>()
             {
                 ErrorMassage = ErrorMessage.InternalServerError,
                 ErrorCode = (int)ErrorCode.InternalServerError
@@ -105,8 +109,8 @@ public class AnnouncementService : IAnnouncementService
                 };
             }
 
-            await _repository.RemoveAsync(announcement);
             await _imageService.DeleteImagesByLinkedEntityId(id);
+            await _repository.RemoveAsync(announcement);
 
             return new BaseResult<AnnouncementDto>()
             {
@@ -170,33 +174,44 @@ public class AnnouncementService : IAnnouncementService
         }
     }
 
-    public async Task<CollectionResult<AnnouncementDto>> GetUserAnnouncementsAsync(Guid userId)
+    public async Task<CollectionResult<AnnouncementAnswerDto>> GetUserAnnouncementsAsync(Guid userId)
     {
         try
         {
             var announcements = await _repository.GetAll()
                 .Where(x => x.UserId == userId)
-                .Select(x => _mapper.Map<AnnouncementDto>(x))
                 .ToArrayAsync();
 
             if (!announcements.Any())
             {
-                return new CollectionResult<AnnouncementDto>()
+                return new CollectionResult<AnnouncementAnswerDto>()
                 {
                     ErrorMassage = ErrorMessage.DataNotFount,
                     ErrorCode = (int)ErrorCode.DataNotFount
                 };
             }
 
-            return new CollectionResult<AnnouncementDto>()
+            var ans = new List<AnnouncementAnswerDto>();
+
+            foreach (var announcement in announcements)
             {
-                Data = announcements,
-                Count = announcements.Length
+                var announcementAnswer = _mapper.Map<AnnouncementAnswerDto>(announcement);
+
+                announcementAnswer.ImagePaths = new List<string>()
+                    { await _imageService.GetEntityPreviewImagePath(announcement.Id) };
+
+                ans.Add(announcementAnswer);
+            }
+
+            return new CollectionResult<AnnouncementAnswerDto>()
+            {
+                Data = ans,
+                Count = ans.Count
             };
         }
         catch (Exception e)
         {
-            return new CollectionResult<AnnouncementDto>()
+            return new CollectionResult<AnnouncementAnswerDto>()
             {
                 ErrorMassage = ErrorMessage.InternalServerError,
                 ErrorCode = (int)ErrorCode.InternalServerError
@@ -204,32 +219,43 @@ public class AnnouncementService : IAnnouncementService
         }
     }
 
-    public async Task<CollectionResult<AnnouncementDto>> GetAllAnnouncementsAsync()
+    public async Task<CollectionResult<AnnouncementAnswerDto>> GetAllAnnouncementsAsync()
     {
         try
         {
             var announcements = await _repository.GetAll()
-                .Select(x => _mapper.Map<AnnouncementDto>(x))
                 .ToArrayAsync();
 
             if (!announcements.Any())
             {
-                return new CollectionResult<AnnouncementDto>()
+                return new CollectionResult<AnnouncementAnswerDto>()
                 {
                     ErrorMassage = ErrorMessage.DataNotFount,
                     ErrorCode = (int)ErrorCode.DataNotFount
                 };
             }
 
-            return new CollectionResult<AnnouncementDto>()
+            var ans = new List<AnnouncementAnswerDto>();
+
+            foreach (var announcement in announcements)
             {
-                Data = announcements,
-                Count = announcements.Length
+                var announcementAnswer = _mapper.Map<AnnouncementAnswerDto>(announcement);
+
+                announcementAnswer.ImagePaths = new List<string>()
+                    { await _imageService.GetEntityPreviewImagePath(announcement.Id) };
+
+                ans.Add(announcementAnswer);
+            }
+
+            return new CollectionResult<AnnouncementAnswerDto>()
+            {
+                Data = ans,
+                Count = ans.Count
             };
         }
         catch (Exception e)
         {
-            return new CollectionResult<AnnouncementDto>()
+            return new CollectionResult<AnnouncementAnswerDto>()
             {
                 ErrorMassage = ErrorMessage.InternalServerError,
                 ErrorCode = (int)ErrorCode.InternalServerError

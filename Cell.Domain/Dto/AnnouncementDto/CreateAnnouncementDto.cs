@@ -6,7 +6,6 @@ public record CreateAnnouncementDto
     Guid UserId,
     string Title,
     string? Description,
-    string Price,
-    string? Address,
-    ICollection<Image>? Images
+    double Price,
+    string? Address
 );

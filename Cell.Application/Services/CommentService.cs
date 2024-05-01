@@ -111,20 +111,22 @@ public class CommentService : ICommentService
             };
         }
     }
-    public async Task<BaseResult<CommentDto>> UpdateCommentAsync(CommentDto dto)
+    public async Task<BaseResult<Comment>> UpdateCommentAsync(UpdateCommentDto dto)
     {
         try
         {
-            await _repository.UpdateAsync(_mapper.Map<Comment>(dto));
+            var updateComment = _mapper.Map<Comment>(dto);
 
-            return new BaseResult<CommentDto>()
+            await _repository.UpdateAsync(updateComment);
+
+            return new BaseResult<Comment>()
             {
-                Data = dto
+                Data = updateComment
             };
         }
         catch (Exception e)
         {
-            return new BaseResult<CommentDto>()
+            return new BaseResult<Comment>()
             {
                 ErrorMassage = ErrorMessage.InternalServerError,
                 ErrorCode = (int)ErrorCode.InternalServerError

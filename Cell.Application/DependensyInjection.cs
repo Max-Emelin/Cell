@@ -39,6 +39,7 @@ public static class DependensyInjection
         services.AddAutoMapper(typeof(UserDtoMapping));
         services.AddAutoMapper(typeof(RegisterUserMapping));
         services.AddAutoMapper(typeof(UserMapping));
+        services.AddAutoMapper(typeof(AnnouncementAnswerMapping));
     }
 
     /// <summary>

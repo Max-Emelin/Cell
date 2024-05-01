@@ -1,4 +1,5 @@
 ﻿using Cell.Domain.Dto.CommentDto;
+using Cell.Domain.Entities;
 using Cell.Domain.Interfaces.Services;
 using Cell.Domain.Result;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +57,7 @@ public class CommentController : ControllerBase
 
     [Route("updateComment")]
     [HttpPut]
-    public async Task<ActionResult<BaseResult<CommentDto>>> UpdateCommentAsync(CommentDto dto)
+    public async Task<ActionResult<BaseResult<Comment>>> UpdateCommentAsync(UpdateCommentDto dto)
     {
         var response = await _commentService.UpdateCommentAsync(dto);
 
