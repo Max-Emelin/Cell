@@ -13,7 +13,7 @@ namespace Cell.Domain.Entities
         public string Login { get; set; }
         public string Password { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public ICollection<Announcement> Announcements { get; } = new List<Announcement>();
-        public ICollection<Comment> Comments { get; } = new List<Comment>();
+        public List<Announcement> Announcements { get; } = new List<Announcement>();
+        public List<Comment> Comments { get; } = new List<Comment>();
     }
 }

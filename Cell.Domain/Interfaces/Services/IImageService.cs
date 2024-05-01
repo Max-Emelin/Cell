@@ -1,11 +1,11 @@
-﻿/*using Cell.Domain.Dto.CommentDto;
+﻿using Cell.Domain.Dto.ImageDto;
 using Cell.Domain.Result;
+using Microsoft.AspNetCore.Http;
 
 namespace Cell.Domain.Interfaces.Services;
 public interface IImageService
 {
-    Task<BaseResult<>> CreateImageAsync( dto);
-    Task<BaseResult<>> DeleteImageByIdAsync(Guid id);
-    Task<BaseResult<>> UpdateImageAsync( dto);
-    Task<CollectionResult<>> GetAnnouncementCommentsAsync(Guid announcementId);
-}*/
+    Task<CollectionResult<ImageDto>> UploadImagesAsync(IFormFileCollection files, Guid entityId, string fileFolder);
+    Task<BaseResult<int>> DeleteImagesByLinkedEntityId(Guid entityId);
+    Task<BaseResult<ImageDto>> DeleteImageById(Guid id);
+}

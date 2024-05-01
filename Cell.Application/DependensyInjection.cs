@@ -1,6 +1,7 @@
 ﻿using Cell.Application.Mapping.AnnouncementMapping;
 using Cell.Application.Mapping.CommentMapping;
 using Cell.Application.Mapping.UserMapping;
+using Cell.Domain.Dto.ImageDto;
 using Cell.Domain.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ public static class DependensyInjection
         services.AddAutoMapper(typeof(CommentMapping));
         services.AddAutoMapper(typeof(CommentDtoMapping));
         services.AddAutoMapper(typeof(CreateCommentMapping));
+        services.AddAutoMapper(typeof(ImageDto));
         services.AddAutoMapper(typeof(UserDtoMapping));
         services.AddAutoMapper(typeof(RegisterUserMapping));
         services.AddAutoMapper(typeof(UserMapping));
@@ -48,5 +50,6 @@ public static class DependensyInjection
         services.AddTransient<IAnnouncementService, AnnouncementService>();
         services.AddTransient<ICommentService, CommentService>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IImageService, ImageService>();
     }
 }

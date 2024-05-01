@@ -42,28 +42,9 @@ public class UserController : ControllerBase
     /// <returns> Пользователь с обновленными данными. </returns>
     [Route("updateUser")]
     [HttpPut]
-    public async Task<ActionResult<BaseResult<UserDto>>> UpdateActor(UserDto dto)
+    public async Task<ActionResult<BaseResult<UserDto>>> UpdateUser(UserDto dto)
     {
         var response = await _userService.UpdateUserAsync(dto);
-
-        if (response.IsSuccess)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
-    }
-
-    /// <summary>
-    /// Создание пользователя.
-    /// </summary>
-    /// <param name="dto"> Пользователь. </param>
-    /// <returns> Пользователь. </returns>
-    [Route("createUser")]
-    [HttpPost]
-    public async Task<ActionResult<CollectionResult<UserDto>>> CreateUser(RegisterUserDto dto)
-    {
-        var response = await _userService.CreateUserAsync(dto);
 
         if (response.IsSuccess)
         {
@@ -102,6 +83,25 @@ public class UserController : ControllerBase
     public async Task<ActionResult<BaseResult<Guid>>> LoginUser(LoginUserDto dto)
     {
         var response = await _userService.LoginUser(dto);
+
+        if (response.IsSuccess)
+        {
+            return Ok(response);
+        }
+
+        return BadRequest(response);
+    }
+
+    /// <summary>
+    /// Создание пользователя.
+    /// </summary>
+    /// <param name="dto"> Пользователь. </param>
+    /// <returns> Пользователь. </returns>
+    [Route("registerUser")]
+    [HttpPost]
+    public async Task<ActionResult<CollectionResult<UserDto>>> RegisterUser(RegisterUserDto dto)
+    {
+        var response = await _userService.CreateUserAsync(dto);
 
         if (response.IsSuccess)
         {

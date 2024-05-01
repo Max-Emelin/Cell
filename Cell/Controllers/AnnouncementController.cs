@@ -61,7 +61,7 @@ public class AnnouncementController : ControllerBase
     /// <returns> Объявление. </returns>
     [Route("createAnnouncement")]
     [HttpPost]
-    public async Task<ActionResult<CollectionResult<AnnouncementDto>>> CreateAnnouncement(AnnouncementDto dto)
+    public async Task<ActionResult<CollectionResult<AnnouncementDto>>> CreateAnnouncement(CreateAnnouncementDto dto)
     {
         var response = await _announcementService.CreateAnnouncementAsync(dto);
 
@@ -125,7 +125,6 @@ public class AnnouncementController : ControllerBase
         if (response.IsSuccess)
         {
             return Ok(response);
-
         }
 
         return BadRequest(response);

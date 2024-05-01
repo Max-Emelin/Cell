@@ -1,4 +1,6 @@
-﻿namespace Cell.Domain.Dto.UserDto;
+﻿using Cell.Domain.Entities;
+
+namespace Cell.Domain.Dto.UserDto;
 
 public record UserDto
 (
@@ -8,5 +10,7 @@ public record UserDto
     string? Email,
     string PhoneNumber,
     string? Address,
-    DateTime Created
+    DateTime Created,
+    ICollection<Announcement> Announcements,
+    ICollection<Comment> Comments
 );

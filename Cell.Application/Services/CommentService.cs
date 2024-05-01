@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Cell.Application.Resources;
 using Cell.Domain.Dto.CommentDto;
-using Cell.Domain.Dto.UserDto;
 using Cell.Domain.Entities;
 using Cell.Domain.Enum;
 using Cell.Domain.Interfaces;
@@ -87,22 +86,35 @@ public class CommentService : ICommentService
             };
         }
     }
+    public async Task<BaseResult<int>> DeleteUserCommentsAsync(Guid userId)
+    {
+        try
+        {
+            var comments = await _repository.GetAll()
+                .Where(x => x.UserFromId == userId || x.UserToId == userId)
+                .ToArrayAsync();
+
+            foreach (var comment in comments)
+                await DeleteCommentByIdAsync(comment.Id);
+
+            return new BaseResult<int>()
+            {
+                Data = comments.Count()
+            };
+        }
+        catch (Exception e)
+        {
+            return new BaseResult<int>()
+            {
+                ErrorMassage = ErrorMessage.InternalServerError,
+                ErrorCode = (int)ErrorCode.InternalServerError
+            };
+        }
+    }
     public async Task<BaseResult<CommentDto>> UpdateCommentAsync(CommentDto dto)
     {
         try
         {
-            var comment = await _repository.GetAll()
-                .FirstOrDefaultAsync(x => x.Id == dto.Id);
-
-            if (comment == null)
-            {
-                return new BaseResult<CommentDto>()
-                {
-                    ErrorMassage = ErrorMessage.DataNotFount,
-                    ErrorCode = (int)ErrorCode.DataNotFount
-                };
-            }
-
             await _repository.UpdateAsync(_mapper.Map<Comment>(dto));
 
             return new BaseResult<CommentDto>()

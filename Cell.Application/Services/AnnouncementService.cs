@@ -13,11 +13,13 @@ namespace Trashcan.Application.Services;
 public class AnnouncementService : IAnnouncementService
 {
     private readonly IBaseRepository<Announcement> _repository;
+    private readonly IImageService _imageService;
     private readonly IMapper _mapper;
 
-    public AnnouncementService(IBaseRepository<Announcement> repository, IMapper mapper)
+    public AnnouncementService(IBaseRepository<Announcement> repository, IImageService imageService, IMapper mapper)
     {
         _repository = repository;
+        _imageService = imageService;
         _mapper = mapper;
     }
 
@@ -52,7 +54,7 @@ public class AnnouncementService : IAnnouncementService
         }
     }
 
-    public async Task<BaseResult<AnnouncementDto>> CreateAnnouncementAsync(AnnouncementDto dto)
+    public async Task<BaseResult<AnnouncementDto>> CreateAnnouncementAsync(CreateAnnouncementDto dto)
     {
         try
         {
@@ -69,7 +71,11 @@ public class AnnouncementService : IAnnouncementService
 
             return new BaseResult<AnnouncementDto>()
             {
-                Data = _mapper.Map<AnnouncementDto>(dto)
+                Data = _mapper.Map<AnnouncementDto>(
+                    _repository.GetAll()
+                        .OrderBy(x => x.Created)
+                        .Last()
+                    )
             };
 
         }
@@ -100,6 +106,7 @@ public class AnnouncementService : IAnnouncementService
             }
 
             await _repository.RemoveAsync(announcement);
+            await _imageService.DeleteImagesByLinkedEntityId(id);
 
             return new BaseResult<AnnouncementDto>()
             {
@@ -116,22 +123,36 @@ public class AnnouncementService : IAnnouncementService
         }
     }
 
+    public async Task<BaseResult<int>> DeleteUserAnnouncementsAsync(Guid userId)
+    {
+        try
+        {
+            var announcements = await _repository.GetAll()
+              .Where(x => x.UserId == userId)
+              .ToArrayAsync();
+
+            foreach (var announcement in announcements)
+                await DeleteAnnouncementByIdAsync(announcement.Id);
+
+            return new BaseResult<int>()
+            {
+                Data = announcements.Count()
+            };
+        }
+        catch (Exception e)
+        {
+            return new BaseResult<int>()
+            {
+                ErrorMassage = ErrorMessage.InternalServerError,
+                ErrorCode = (int)ErrorCode.InternalServerError
+            };
+        }
+    }
+
     public async Task<BaseResult<AnnouncementDto>> UpdateAnnouncementAsync(AnnouncementDto dto)
     {
         try
         {
-            var announcement = await _repository.GetAll()
-                .FirstOrDefaultAsync(x => x.Id == dto.Id);
-
-            if (announcement == null)
-            {
-                return new BaseResult<AnnouncementDto>()
-                {
-                    ErrorMassage = ErrorMessage.DataNotFount,
-                    ErrorCode = (int)ErrorCode.DataNotFount
-                };
-            }
-
             await _repository.UpdateAsync(_mapper.Map<Announcement>(dto));
 
             return new BaseResult<AnnouncementDto>()
@@ -154,8 +175,8 @@ public class AnnouncementService : IAnnouncementService
         try
         {
             var announcements = await _repository.GetAll()
-                .Select(x => _mapper.Map<AnnouncementDto>(x))
                 .Where(x => x.UserId == userId)
+                .Select(x => _mapper.Map<AnnouncementDto>(x))
                 .ToArrayAsync();
 
             if (!announcements.Any())

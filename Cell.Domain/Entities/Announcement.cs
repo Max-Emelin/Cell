@@ -12,6 +12,6 @@ namespace Cell.Domain.Entities
         public double Price { get; set; }
         public string? Address { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public ICollection<Image> Images { get; } = new List<Image>();
+        public List<Image> Images { get; } = new List<Image>();
     }
 }

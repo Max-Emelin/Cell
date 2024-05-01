@@ -13,21 +13,21 @@ namespace Trashcan.Application.Services;
 public class UserService : IUserService
 {
     private readonly IBaseRepository<User> _userRepository;
-    private readonly IBaseRepository<Announcement> _announcementRepository;
-    private readonly IBaseRepository<Comment> _commentRepository;
+    private readonly ICommentService _commentService;
+    private readonly IAnnouncementService _announcementService;
     private readonly IMapper _mapper;
 
     public UserService
-        (
+    (
         IBaseRepository<User> userRepository,
-        IBaseRepository<Announcement> announcementrepository,
-        IBaseRepository<Comment> commentRepository,
+        ICommentService commentService,
+        IAnnouncementService announcementService,
         IMapper mapper
-        )
+    )
     {
         _userRepository = userRepository;
-        _announcementRepository = announcementrepository;
-        _commentRepository = commentRepository;
+        _commentService = commentService;
+        _announcementService = announcementService;
         _mapper = mapper;
     }
 
@@ -147,18 +147,6 @@ public class UserService : IUserService
     {
         try
         {
-            var user = await _userRepository.GetAll()
-                .FirstOrDefaultAsync(x => x.Id == dto.Id);
-
-            if (user == null)
-            {
-                return new BaseResult<UserDto>()
-                {
-                    ErrorMassage = ErrorMessage.DataNotFount,
-                    ErrorCode = (int)ErrorCode.DataNotFount
-                };
-            }
-
             await _userRepository.UpdateAsync(_mapper.Map<User>(dto));
 
             return new BaseResult<UserDto>()
@@ -180,26 +168,8 @@ public class UserService : IUserService
     {
         try
         {
-            var announcements = await _announcementRepository.GetAll()
-               .Where(x => x.UserId == userId)
-               .ToArrayAsync();
-
-            foreach (var announcement in announcements)
-                await _announcementRepository.RemoveAsync(announcement);
-
-            var commentsFrom = await _commentRepository.GetAll()
-                .Where(x => x.UserFromId == userId)
-                .ToArrayAsync();
-
-            foreach (var comment in commentsFrom)
-                await _commentRepository.RemoveAsync(comment);
-
-            var commentsTo = await _commentRepository.GetAll()
-                .Where(x => x.UserToId == userId)
-                .ToArrayAsync();
-
-            foreach (var comment in commentsTo)
-                await _commentRepository.RemoveAsync(comment);
+            await _announcementService.DeleteUserAnnouncementsAsync(userId);
+            await _commentService.DeleteUserCommentsAsync(userId);
 
             return new BaseResult<bool>()
             {
