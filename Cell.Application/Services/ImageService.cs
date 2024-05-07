@@ -34,6 +34,8 @@ public class ImageService : IImageService
             var image = await _repository.GetAll()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var fileFolder = $"C:\\Users\\I\\source\\repos\\Cell\\Cell\\wwwroot\\Images";
+
             if (image == null)
             {
                 return new BaseResult<ImageDto>()
@@ -43,8 +45,8 @@ public class ImageService : IImageService
                 };
             }
 
-            if (File.Exists(image.Path))
-                File.Delete(image.Path);
+            if (File.Exists($"{fileFolder}{image.Path}"))
+                File.Delete($"{fileFolder}{image.Path}");
 
             await _repository.RemoveAsync(image);
 
@@ -138,7 +140,8 @@ public class ImageService : IImageService
                 if (PermittedFileTypes.Contains(file.ContentType))
                 {
                     var fileGuid = Guid.NewGuid();
-                    var filePath = $"{fileFolder}{fileGuid}.jpg";
+                    var fileName = $"{fileGuid}.jpg";
+                    var filePath = $"{fileFolder}{fileName}";
 
                     if (File.Exists(filePath))
                         File.Delete(filePath);
@@ -148,7 +151,7 @@ public class ImageService : IImageService
                         await file.CopyToAsync(stream);
                     }
 
-                    var imageDto = new ImageDto() { Id = fileGuid, AnnouncementId = entityId, Path = filePath };
+                    var imageDto = new ImageDto() { Id = fileGuid, AnnouncementId = entityId, Path = fileName };
 
                     var image = await _repository.CreateAsync(_mapper.Map<Image>(imageDto));
 

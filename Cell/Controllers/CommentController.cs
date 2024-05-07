@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Cell.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/[controller]")]
 public class CommentController : ControllerBase
 {
     private readonly ICommentService _commentService;

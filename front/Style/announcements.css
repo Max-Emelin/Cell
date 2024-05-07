@@ -1,0 +1,85 @@
+body {
+    margin: 0 0;
+    background-size: cover;
+    background: -webkit-linear-gradient(90deg, #4d4b56, #72558a, black) no-repeat fixed;
+}
+
+
+.site-title {
+    height: 100px;
+    width: 100%;
+    margin: 0 auto;
+    background-image: url('http://127.0.0.1:8080/bg2.jpg');
+}
+.site-title-text{
+    color: snow;
+    padding: 10px 10px 10px 180px;
+    font-size: 50px;
+    font-weight: bold;
+    height: auto;
+    width: 100px;
+    text-align: left;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 20);
+    float: left;
+}
+.nav-buttons {
+    margin: 45px 15px 0 25%;
+    float: left;
+    height: 55px;
+}
+.nav-button {
+    padding: 0 15px 0 15px;
+    font-size: 15px;
+    margin: 0 60px 0 0;
+    height: 50px;
+    border-radius: 10px;
+    color: black;
+    transition: .2s linear;
+    background: #e3e1ef;
+    float: left;
+}
+.nav-button:hover {
+    box-shadow: 0 0 0 2px black, 0 0 0 4px darkgrey;
+}
+
+
+.container {
+    margin: 10px 10px 10px 10px;
+    overflow: auto;
+}
+.announcement {
+    float: left;
+    height: 300px;
+    width: 244px;
+    margin: 10px 20px 20px 10px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    border-radius: 5px;
+    background-color: snow;
+}
+.announcement:hover {
+    box-shadow: 0 0 0 4px black, 0 0 0 8px #e3e1ef;
+}
+.announcement-link {
+    text-decoration: none;
+    color: inherit;
+}
+.announcement-image {
+    width: 240px;
+    height: 240px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    border-radius: 5px;
+}
+.announcement-title {
+    font-size: 20px;
+    font-weight: lighter;
+    margin: 0 0 0 15px;
+}
+.announcement-price {
+    font-size: 25px;
+    font-weight: bold;
+    float: right;
+    margin: 0 15px 0 0;
+}

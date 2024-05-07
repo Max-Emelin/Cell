@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Cell.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
