@@ -18,17 +18,19 @@ function getContainerInfo(){
         <div class="createAnnouncement" id="createAnnouncement">
             <p class="createAnnouncement-title" id="createAnnouncement-title">Создание объявления</p>
              <form action="http://localhost:5059/api/Announcement/createAnnouncement" method="post" id="createAnnouncementForm">
-                <div class="createAnnouncement" id="createAnnouncement-info">
+                <div class="createAnnouncement-info" id="createAnnouncement-info">
                     <p class="createAnnouncement-info-text">Заголовок</p>
                     <p class="createAnnouncement-info-text">Описание</p>
                     <p class="createAnnouncement-info-text">Цена</p>
                     <p class="createAnnouncement-info-text">Адрес</p>
+                    <p class="createAnnouncement-info-text">Фотографии</p>
                 </div>
                 <div class="createAnnouncement-input" id="createAnnouncement-input">
                     <input type="text" class="textInput" name="title" id="titleInput" placeholder="Введите заголовок..." required>
                     <input type="text" class="textInput" name="description" id="descriptionInput" placeholder="Введите описание..." required>    
                     <input type="number" class="textInput" name="price" id="priceInput" placeholder="Введите цену..." required>
                     <input type="text" class="textInput" name="address" id="addressInput" placeholder="Введите адрес..." required>
+                    <input type="file" class="textInput" multiple="multiple" placeholder="Выберите фотографии...">
                 </div> 
                 <input type="submit" class="submit-btn" value="Подать объявление">
             </form>
