@@ -6,38 +6,13 @@ fetch(
     "http://localhost:5059/api/Announcement/getAnnouncement?id="+id.toString()
     )
     .then(res=>res.json())
-    .then(data=>setInfo(data.data));
+    .then(data=>start(data.data));
 
-function getHeader(){
-    return ` 
-        <div class="site-title" id="site-title">
-            <span class="site-title-text">Cell</span>
-            <div class="nav-buttons">
-                    <button class="nav-button">Посмотреть объявления</button>
-                    <button class="nav-button">Создать объявление</button>
-                    <button class="nav-button">Профиль</button>
-            </div>
-        </div>
-    `;
-}
-function getContainer(){
-    return `
-        <div class="container" id="container"></div>    
-    `
+function start(data){
+    setInfo()
+    insertAnnouncementToContainer(data)
 }
 
-
-function setInfo(values){
-    document.body.insertAdjacentHTML(
-        'afterbegin',
-        `
-        ${getHeader()}
-        ${getContainer()}
-        `
-    )
-
-    insertAnnouncementToContainer(values)
-}
 function insertAnnouncementToContainer(announcement){
     document.getElementById('container').insertAdjacentHTML(
         'afterbegin',
@@ -50,14 +25,13 @@ function insertAnnouncementToContainer(announcement){
                 <p class="announcement-price">Цена: ${announcement.price} ₽</p>
                 <p class="announcement-address">Адрес: ${announcement.address}</p>      
                 <p class="announcement-created">Создано: ${getNormalDate(announcement.created)}</p>     
-                <button class="announcement-user-link"> Перейти в профиль создателя</button> 
+                <button class="announcement-user-link" onclick="goToUser('${announcement.userId.toString()}')"> Перейти в профиль создателя</button> 
             </div>     
         </div>`
     );
 
     makeGallery(announcement);
 }
-
 function getNormalDate(date){
     const oldDate = new Date(date);
 
@@ -151,7 +125,9 @@ function showSlides(n) {
 
 
 
-
+function goToUser(userId){
+    window.location.href = `http://localhost:63342/front/front/Html/User.html?id=${userId}`;
+}
 
 
 

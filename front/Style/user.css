@@ -1,0 +1,117 @@
+.container {
+    overflow: auto;
+}
+
+.user-container{
+    margin: 20px 0 20px 70px;
+    overflow: auto;
+    width: 700px;
+    float: left;
+}
+.user {
+    overflow: auto;
+    width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.user-keys{
+    width: 200px;
+    float: left;
+}
+.user-values{
+    width: 300px;
+    float: left;
+}
+
+
+.info-title{
+    font-size: 30px;
+    margin: 20px 0 20px 250px;
+    width: 250px;
+    height: 50px;
+    float: left;
+}
+
+
+.comments-container{
+    margin: 20px 0 20px 0;
+    overflow: auto;
+    width: 700px;
+    float: left;
+}
+.comments{
+    margin: 0 0 20px 50px;
+    overflow: auto;
+    width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+    float: left;
+    text-align: center;
+}
+.comment-text{
+    text-align: left;
+}
+.comment-title{
+    text-align: center;
+}
+.user-from-link{
+    color: inherit;
+}
+.user-from-link:hover{
+    color: cornflowerblue;
+}
+
+
+
+.announcements-container {
+    margin: 20px 0 20px 0;
+    overflow: auto;
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+.announcements-title{
+    font-size: 30px;
+}
+.announcement {
+    float: left;
+    height: 300px;
+    width: 244px;
+    margin: 10px 20px 20px 50px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    border-radius: 5px;
+    background-color: snow;
+}
+.announcement:hover {
+    box-shadow: 0 0 0 4px black, 0 0 0 8px #e3e1ef;
+}
+.announcement-link {
+    text-decoration: none;
+    color: inherit;
+}
+.announcement-image {
+    width: 240px;
+    height: 240px;
+    border: 2px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+    border-radius: 5px;
+}
+.announcement-title {
+    color: black;
+    font-size: 20px;
+    font-weight: lighter;
+    margin: 0 0 0 15px;
+    text-align: left;
+}
+.announcement-price {
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    float: right;
+    margin: 0 15px 0 0;
+}

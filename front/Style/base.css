@@ -1,0 +1,104 @@
+body {
+    margin: 0 0;
+    background-size: cover;
+    background: -webkit-linear-gradient(90deg, #4d4b56, #72558a, black) no-repeat fixed;
+    color: white;
+}
+
+
+.site-title {
+    height: 100px;
+    width: 100%;
+    margin: 0 auto;
+    background-image: url('http://127.0.0.1:8080/bg2.jpg');
+}
+.site-title-text{
+    color: snow;
+    padding: 10px 10px 10px 10%;
+    font-size: 50px;
+    font-weight: bold;
+    height: auto;
+    width: 100px;
+    text-align: left;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 20);
+    float: left;
+}
+.nav-buttons {
+    margin: 45px 15px 0 15%;
+    float: left;
+    height: 55px;
+}
+.nav-button {
+    padding: 0 15px 0 15px;
+    font-size: 15px;
+    margin: 0 50px 0 0;
+    height: 50px;
+    border-radius: 10px;
+    color: black;
+    transition: .2s linear;
+    background: #e3e1ef;
+    float: left;
+}
+.nav-button:hover {
+    box-shadow: 0 0 0 2px black, 0 0 0 4px darkgrey;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.popup-content {
+    text-align: center;
+    background: -webkit-linear-gradient(90deg, #4d4b56, #72558a, black) no-repeat fixed;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    font-size: 27px;
+}
+.login-h{
+    margin: 0 0 20px 5%;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 38px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.login-submit-btn {
+    margin-top: 40px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: black;
+    transition: .2s linear;
+    background: #e3e1ef;
+    font-size: 17px;
+}
+.login-submit-btn:hover {
+     box-shadow: 0 0 0 2px black, 0 0 0 4px darkgrey;
+ }
+.login-input{
+    margin: 10px 0 0 0;
+    font-size: 15px;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

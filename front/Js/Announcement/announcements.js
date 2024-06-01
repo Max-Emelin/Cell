@@ -1,37 +1,16 @@
 fetch('http://localhost:5059/api/Announcement/getAllAnnouncements')
     .then(res=>res.json())
-    .then(data=>setInfo(data.data));
+    .then(data=>start(data.data));
 
+let userId = localStorage.getItem('userId');
 
-function getHeader(){
-    return ` 
-        <div class="site-title" id="site-title">
-            <span class="site-title-text">Cell</span>
-            <div class="nav-buttons">
-                    <button class="nav-button">Посмотреть объявления</button>
-                    <button class="nav-button">Создать объявление</button>
-                    <button class="nav-button">Профиль</button>
-            </div>
-        </div>
-    `;
+function start(data){
+    setInfo()
+    insertAnnouncementsToContainer(data)
 }
 
-function getContainer(){
-    return `
-        <div class="container" id="container"></div>    
-    `
-}
-function setInfo(values){
-    document.body.insertAdjacentHTML(
-        'afterbegin',
-        `
-        ${getHeader()}
-        ${getContainer()}
-        `
-    )
 
-    insertAnnouncementsToContainer(values);
-}
+
 function insertAnnouncementsToContainer(announcements){
     for(let announcement of announcements){
         insertOneAnnouncementToContainer(announcement);
